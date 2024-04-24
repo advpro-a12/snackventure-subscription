@@ -3,6 +3,7 @@ package id.ac.ui.cs.advprog.snackventure.subscription.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import id.ac.ui.cs.advprog.snackventure.subscription.enums.*;
+import id.ac.ui.cs.advprog.snackventure.subscription.status.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +16,6 @@ public class SubscriptionTest {
     @BeforeEach
     public void setUp() {
         subscription = new Subscription(frequency, customerId, subscriptionBoxId);
-        System.out.println("Subscription code: " + subscription.getSubscriptionCode());
     }
 
     @Test
@@ -32,35 +32,70 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testSetApprovalStatusToApproved() {
-        subscription.setApprovalStatus(ApprovalStatus.APPROVED);
-        assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
-    }
-
-    @Test
-    public void testSetApprovalStatusToRejected() {
-        subscription.setApprovalStatus(ApprovalStatus.REJECTED);
-        assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
-    }
-
-    @Test
-    public void testSetSubscriptionStatusToSubscribed() {
-        subscription.setSubscriptionStatus(SubscriptionStatus.SUBSCRIBED);
-        assertEquals(SubscriptionStatus.SUBSCRIBED, subscription.getSubscriptionStatus());
-    }
-
-    @Test
-    public void testSetSubscriptionStatusToCancelled() {
-        subscription.setSubscriptionStatus(SubscriptionStatus.CANCELLED);
-        assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
-    }
-
-    @Test
     public void testSubscriptionCodeFormat() {
         String subscriptionCode = subscription.getSubscriptionCode();
         assertNotNull(subscriptionCode);
         String[] parts = subscriptionCode.split("-");
         assertEquals(2, parts.length);
         assertEquals(frequency.getValue(), parts[0]);
+    }
+
+    @Test
+    public void testApprove() {
+        subscription.approve();
+        assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
+        assertEquals(SubscriptionStatus.SUBSCRIBED, subscription.getSubscriptionStatus());
+        assertInstanceOf(ApprovedState.class, subscription.getState());
+    }
+
+    @Test
+    public void testReject() {
+        subscription.reject();
+        assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
+        assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
+        assertInstanceOf(RejectedState.class, subscription.getState());
+    }
+
+    @Test
+    public void testCancel() {
+        subscription.cancel();
+        assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
+        assertInstanceOf(CancelledState.class, subscription.getState());
+    }
+
+    @Test
+    public void testApproveRejected() {
+        subscription.reject();
+        subscription.approve();
+        assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
+        assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
+        assertInstanceOf(RejectedState.class, subscription.getState());
+    }
+
+    @Test
+    public void testRejectApproved() {
+        subscription.approve();
+        subscription.reject();
+        assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
+        assertEquals(SubscriptionStatus.SUBSCRIBED, subscription.getSubscriptionStatus());
+        assertInstanceOf(ApprovedState.class, subscription.getState());
+    }
+
+    @Test
+    public void testCancelApproved() {
+        subscription.approve();
+        subscription.cancel();
+        assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
+        assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
+        assertInstanceOf(CancelledState.class, subscription.getState());
+    }
+
+    @Test
+    public void testCancelRejected() {
+        subscription.reject();
+        subscription.cancel();
+        assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
+        assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
+        assertInstanceOf(RejectedState.class, subscription.getState());
     }
 }
