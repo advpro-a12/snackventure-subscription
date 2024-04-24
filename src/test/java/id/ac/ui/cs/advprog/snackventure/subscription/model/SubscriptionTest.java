@@ -24,6 +24,8 @@ public class SubscriptionTest {
         assertNotNull(subscription.getId());
         assertNotNull(subscription.getCreatedAt());
         assertNotNull(subscription.getSubscriptionCode());
+        assertNull(subscription.getStartDate());
+        assertNull(subscription.getEndDate());
         assertEquals(ApprovalStatus.PENDING, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.PENDING, subscription.getSubscriptionStatus());
         assertEquals(frequency, subscription.getFrequency());
@@ -46,6 +48,8 @@ public class SubscriptionTest {
         assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.SUBSCRIBED, subscription.getSubscriptionStatus());
         assertInstanceOf(ApprovedState.class, subscription.getState());
+        assertNotNull(subscription.getStartDate());
+        assertNull(subscription.getEndDate());
     }
 
     @Test
@@ -54,6 +58,8 @@ public class SubscriptionTest {
         assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
         assertInstanceOf(RejectedState.class, subscription.getState());
+        assertNull(subscription.getStartDate());
+        assertNull(subscription.getEndDate());
     }
 
     @Test
@@ -61,6 +67,8 @@ public class SubscriptionTest {
         subscription.cancel();
         assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
         assertInstanceOf(CancelledState.class, subscription.getState());
+        assertNull(subscription.getStartDate());
+        assertNull(subscription.getEndDate());
     }
 
     @Test
@@ -70,6 +78,8 @@ public class SubscriptionTest {
         assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
         assertInstanceOf(RejectedState.class, subscription.getState());
+        assertNull(subscription.getStartDate());
+        assertNull(subscription.getEndDate());
     }
 
     @Test
@@ -79,6 +89,8 @@ public class SubscriptionTest {
         assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.SUBSCRIBED, subscription.getSubscriptionStatus());
         assertInstanceOf(ApprovedState.class, subscription.getState());
+        assertNotNull(subscription.getStartDate());
+        assertNull(subscription.getEndDate());
     }
 
     @Test
@@ -88,6 +100,8 @@ public class SubscriptionTest {
         assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
         assertInstanceOf(CancelledState.class, subscription.getState());
+        assertNotNull(subscription.getStartDate());
+        assertNotNull(subscription.getEndDate());
     }
 
     @Test
@@ -97,5 +111,7 @@ public class SubscriptionTest {
         assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
         assertInstanceOf(RejectedState.class, subscription.getState());
+        assertNull(subscription.getStartDate());
+        assertNull(subscription.getEndDate());
     }
 }
