@@ -2,6 +2,8 @@ package id.ac.ui.cs.advprog.snackventure.subscription.model;
 
 import jakarta.persistence.*;
 import id.ac.ui.cs.advprog.snackventure.subscription.enums.*;
+import id.ac.ui.cs.advprog.snackventure.subscription.status.PendingState;
+import id.ac.ui.cs.advprog.snackventure.subscription.status.SubscriptionState;
 import java.util.Date;
 import java.util.UUID;
 import lombok.Getter;
@@ -46,7 +48,11 @@ public class Subscription {
     @Column(name="subscription_box_id", updatable = false, nullable = false)
     private String subscriptionBoxId;
 
+    @Transient
+    private SubscriptionState state;
+
     public Subscription() {
+        this.state = new PendingState();
     }
 
     public Subscription(DeliveryFrequency frequency, String customerId, String subscriptionBoxId) {
@@ -58,5 +64,18 @@ public class Subscription {
         this.frequency = frequency;
         this.customerId = customerId;
         this.subscriptionBoxId = subscriptionBoxId;
+        this.state = new PendingState();
+    }
+
+    public void approve() {
+        state.approve(this);
+    }
+
+    public void reject() {
+        state.reject(this);
+    }
+
+    public void cancel() {
+        state.cancel(this);
     }
 }
