@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.snackventure.subscription.service;
 
 import id.ac.ui.cs.advprog.snackventure.subscription.enums.ApprovalStatus;
+import id.ac.ui.cs.advprog.snackventure.subscription.enums.DeliveryFrequency;
 import id.ac.ui.cs.advprog.snackventure.subscription.enums.SubscriptionStatus;
 import id.ac.ui.cs.advprog.snackventure.subscription.model.Subscription;
 import id.ac.ui.cs.advprog.snackventure.subscription.repository.SubscriptionRepository;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,12 +37,15 @@ public class SubscriptionServiceImplTest {
 
     @Test
     public void testCreateSubscription() {
-        Subscription subscription = new Subscription();
-        when(subscriptionRepository.save(subscription)).thenReturn(subscription);
+        String frequency = DeliveryFrequency.MONTHLY.getValue();
+        String subscriptionBoxId = "1";
+        String customerId = "1";
+        Subscription subscription = new Subscription(DeliveryFrequency.fromString(frequency), subscriptionBoxId, customerId);
+        when(subscriptionRepository.save(any(Subscription.class))).thenReturn(subscription);
 
-        Subscription createdSubscription = subscriptionService.createSubscription(subscription);
+        Subscription createdSubscription = subscriptionService.createSubscription(frequency, subscriptionBoxId, customerId);
 
-        verify(subscriptionRepository, times(1)).save(subscription);
+        verify(subscriptionRepository, times(1)).save(any(Subscription.class));
         assertEquals(subscription, createdSubscription);
     }
 
