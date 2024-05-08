@@ -14,12 +14,12 @@ public enum DeliveryFrequency {
         this.value = value;
     }
 
-    public static boolean contains(String param) {
+    public static DeliveryFrequency fromString(String param) {
         for (DeliveryFrequency deliveryFrequency : DeliveryFrequency.values()) {
-            if (deliveryFrequency.name().equals(param)) {
-                return true;
+            if (deliveryFrequency.getValue().equals(param)) {
+                return deliveryFrequency;
             }
         }
-        return false;
+        throw new IllegalArgumentException("Invalid delivery frequency: " + param);
     }
 }

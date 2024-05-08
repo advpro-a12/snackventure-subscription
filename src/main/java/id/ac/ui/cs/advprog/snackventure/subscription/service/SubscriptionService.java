@@ -4,7 +4,7 @@ import id.ac.ui.cs.advprog.snackventure.subscription.model.Subscription;
 import java.util.List;
 
 public interface SubscriptionService {
-    public Subscription createSubscription(Subscription subscription);
+    public Subscription createSubscription(String frequency, String subscriptionBoxId, String customerId);
     public List<Subscription> getAllSubscriptions();
     public Subscription findById(String subscriptionId);
     public Subscription updateApprovalStatus(String subscriptionId, String status);
