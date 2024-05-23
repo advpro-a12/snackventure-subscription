@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class SubscriptionController {
     private SubscriptionService subscriptionService;
 
     @Async
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     @PostMapping("/subscription-box/{id}/subscribe")
     public CompletableFuture<ResponseEntity<Subscription>> createSubscription(@PathVariable String id, @RequestBody Map<String, String> requestBody) {
         String frequency = requestBody.get("frequency");
@@ -29,6 +31,7 @@ public class SubscriptionController {
     }
 
     @Async
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/subscriptions")
     public CompletableFuture<ResponseEntity<List<Subscription>>> getAllSubscriptions() {
         List<Subscription> subscriptions = subscriptionService.getAllSubscriptions();
@@ -36,6 +39,7 @@ public class SubscriptionController {
     }
 
     @Async
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("subscriptions/{id}")
     public CompletableFuture<ResponseEntity<Subscription>> getSubscriptionById(@PathVariable String id) {
         Subscription subscription = subscriptionService.findById(id);
@@ -43,6 +47,7 @@ public class SubscriptionController {
     }
 
     @Async
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("subscriptions/{id}/change-status")
     public CompletableFuture<ResponseEntity<Subscription>> updateApprovalStatus(@PathVariable String id, @RequestBody Map<String, String> requestBody) {
         String status = requestBody.get("status");
@@ -51,6 +56,7 @@ public class SubscriptionController {
     }
 
     @Async
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     @PutMapping("subscriptions/{id}/unsubscribe")
     public CompletableFuture<ResponseEntity<Subscription>> cancelSubscription(@PathVariable String id) {
         Subscription cancelledSubscription = subscriptionService.cancelSubscription(id);
