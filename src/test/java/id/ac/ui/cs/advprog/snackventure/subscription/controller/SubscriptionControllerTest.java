@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-public class SubscriptionControllerTest {
+class SubscriptionControllerTest {
 
     @InjectMocks
     private SubscriptionController subscriptionController;
@@ -43,7 +43,7 @@ public class SubscriptionControllerTest {
     }
 
     @Test
-    public void testCreateSubscription() throws Exception {
+    void testCreateSubscription() throws Exception {
         Subscription subscription = new Subscription();
         subscription.setSubscriptionBoxId("1f36d862-6e0b-47a3-aa17-e02ec74a0246");
         subscription.setFrequency(DeliveryFrequency.MONTHLY);
@@ -66,7 +66,7 @@ public class SubscriptionControllerTest {
     }
 
     @Test
-    public void testGetAllSubscriptions() throws Exception {
+    void testGetAllSubscriptions() throws Exception {
         List<Subscription> subscriptions = new ArrayList<>();
         Subscription subscription = new Subscription();
         subscription.setSubscriptionBoxId("1f36d862-6e0b-47a3-aa17-e02ec74a0246");
@@ -86,7 +86,7 @@ public class SubscriptionControllerTest {
     }
 
     @Test
-    public void testGetSubscriptionById() throws Exception {
+    void testGetSubscriptionById() throws Exception {
         Subscription subscription = new Subscription();
         subscription.setSubscriptionBoxId("1f36d862-6e0b-47a3-aa17-e02ec74a0246");
         subscription.setFrequency(DeliveryFrequency.MONTHLY);
@@ -104,7 +104,7 @@ public class SubscriptionControllerTest {
     }
 
     @Test
-    public void testUpdateApprovalStatus() throws Exception {
+    void testUpdateApprovalStatus() throws Exception {
         Subscription subscription = new Subscription();
         subscription.setSubscriptionBoxId("1f36d862-6e0b-47a3-aa17-e02ec74a0246");
         subscription.setFrequency(DeliveryFrequency.MONTHLY);
@@ -126,7 +126,7 @@ public class SubscriptionControllerTest {
     }
 
     @Test
-    public void testCancelSubscription() throws Exception {
+    void testCancelSubscription() throws Exception {
         Subscription subscription = new Subscription();
         subscription.setSubscriptionBoxId("1f36d862-6e0b-47a3-aa17-e02ec74a0246");
         subscription.setFrequency(DeliveryFrequency.MONTHLY);
