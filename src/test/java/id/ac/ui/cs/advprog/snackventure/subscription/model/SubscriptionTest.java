@@ -7,7 +7,7 @@ import id.ac.ui.cs.advprog.snackventure.subscription.status.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SubscriptionTest {
+class SubscriptionTest {
     private Subscription subscription;
     private final DeliveryFrequency frequency = DeliveryFrequency.MONTHLY;
     private final String customerId = "07f9b8b0-7257-4434-a5b9-79c9703f0760";
@@ -19,7 +19,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testSubscriptionCreation() {
+    void testSubscriptionCreation() {
         assertNotNull(subscription);
         assertNotNull(subscription.getId());
         assertNotNull(subscription.getCreatedAt());
@@ -34,7 +34,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testSubscriptionCodeFormat() {
+    void testSubscriptionCodeFormat() {
         String subscriptionCode = subscription.getSubscriptionCode();
         assertNotNull(subscriptionCode);
         String[] parts = subscriptionCode.split("-");
@@ -43,7 +43,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testApprove() {
+    void testApprove() {
         subscription.approve();
         assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.SUBSCRIBED, subscription.getSubscriptionStatus());
@@ -53,7 +53,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testReject() {
+    void testReject() {
         subscription.reject();
         assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
         assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
@@ -63,7 +63,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testCancel() {
+    void testCancel() {
         subscription.cancel();
         assertEquals(SubscriptionStatus.CANCELLED, subscription.getSubscriptionStatus());
         assertInstanceOf(CancelledState.class, subscription.getState());
@@ -72,7 +72,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testApproveRejected() {
+    void testApproveRejected() {
         subscription.reject();
         subscription.approve();
         assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());
@@ -83,7 +83,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testRejectApproved() {
+    void testRejectApproved() {
         subscription.approve();
         subscription.reject();
         assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
@@ -94,7 +94,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testCancelApproved() {
+    void testCancelApproved() {
         subscription.approve();
         subscription.cancel();
         assertEquals(ApprovalStatus.APPROVED, subscription.getApprovalStatus());
@@ -105,7 +105,7 @@ public class SubscriptionTest {
     }
 
     @Test
-    public void testCancelRejected() {
+    void testCancelRejected() {
         subscription.reject();
         subscription.cancel();
         assertEquals(ApprovalStatus.REJECTED, subscription.getApprovalStatus());

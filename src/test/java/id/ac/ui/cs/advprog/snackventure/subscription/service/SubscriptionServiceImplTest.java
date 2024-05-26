@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class SubscriptionServiceImplTest {
+class SubscriptionServiceImplTest {
 
     @InjectMocks
     private SubscriptionServiceImpl subscriptionService;
@@ -36,7 +36,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testCreateSubscription() {
+    void testCreateSubscription() {
         String frequency = DeliveryFrequency.MONTHLY.getValue();
         String subscriptionBoxId = "1";
         String customerId = "1";
@@ -50,7 +50,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testGetAllSubscriptions() {
+    void testGetAllSubscriptions() {
         Subscription subscription1 = new Subscription();
         Subscription subscription2 = new Subscription();
         when(subscriptionRepository.findAll()).thenReturn(Arrays.asList(subscription1, subscription2));
@@ -62,7 +62,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testGetSubscriptionById() {
+    void testGetSubscriptionById() {
         Subscription subscription = new Subscription();
         UUID id = UUID.randomUUID();
         subscription.setId(id);
@@ -75,7 +75,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testGetSubscriptionsByCustomerId() {
+    void testGetSubscriptionsByCustomerId() {
         Subscription subscription1 = new Subscription();
         Subscription subscription2 = new Subscription();
         String customerId = "1";
@@ -88,7 +88,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testUpdateApprovalStatusToApproved() {
+    void testUpdateApprovalStatusToApproved() {
         Subscription subscription = new Subscription();
         UUID id = UUID.randomUUID();
         subscription.setId(id);
@@ -102,7 +102,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testUpdateApprovalStatusToRejected() {
+    void testUpdateApprovalStatusToRejected() {
         Subscription subscription = new Subscription();
         UUID id = UUID.randomUUID();
         subscription.setId(id);
@@ -116,7 +116,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testUpdateApprovalStatusInvalidStatus() {
+    void testUpdateApprovalStatusInvalidStatus() {
         Subscription subscription = new Subscription();
         UUID id = UUID.randomUUID();
         subscription.setId(id);
@@ -130,7 +130,7 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
-    public void testCancelSubscription() {
+    void testCancelSubscription() {
         Subscription subscription = new Subscription();
         UUID id = UUID.randomUUID();
         subscription.setId(id);
