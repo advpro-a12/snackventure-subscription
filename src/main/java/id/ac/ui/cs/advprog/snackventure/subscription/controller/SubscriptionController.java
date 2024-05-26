@@ -18,8 +18,12 @@ import java.util.concurrent.CompletableFuture;
 @EnableAsync
 public class SubscriptionController {
 
+    private final SubscriptionService subscriptionService;
+
     @Autowired
-    private SubscriptionService subscriptionService;
+    public SubscriptionController(SubscriptionService subscriptionService) {
+        this.subscriptionService = subscriptionService;
+    }
 
     @Async
     @PreAuthorize("hasAuthority('CUSTOMER')")
