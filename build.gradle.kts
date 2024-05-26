@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     jacoco
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
 group = "id.ac.ui.cs.advprog.snackventure"
@@ -10,6 +11,9 @@ version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
 
 configurations {
@@ -20,6 +24,14 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "advpro-a12_snackventure-subscription")
+        property("sonar.organization", "advpro-a12")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 dependencies {
@@ -62,18 +74,18 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+
 tasks.test {
-    useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+
+    finalizedBy(tasks.jacocoTestReport)
 }
+
 tasks.jacocoTestReport {
-    classDirectories.setFrom(files(classDirectories.files.map {
-        fileTree(it) { exclude("**/*Application**") }
-    }))
-    dependsOn(tasks.test) // tests are required to run before generating the report
+    dependsOn(tasks.test)
     reports {
-        xml.required.set(false)
-        csv.required.set(false)
-        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+        xml.required = true
     }
 }
