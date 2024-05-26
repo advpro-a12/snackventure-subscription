@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     jacoco
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
 group = "id.ac.ui.cs.advprog.snackventure"
@@ -23,6 +24,14 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "advpro-a12_snackventure-subscription")
+        property("sonar.organization", "advpro-a12")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 dependencies {
