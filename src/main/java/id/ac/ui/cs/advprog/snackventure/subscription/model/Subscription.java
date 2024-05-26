@@ -62,7 +62,7 @@ public class Subscription {
         this.state = new PendingState();
     }
 
-    public Subscription(DeliveryFrequency frequency, String customerId, String subscriptionBoxId) {
+    public Subscription(DeliveryFrequency frequency, String subscriptionBoxId, String customerId) {
         this.id = UUID.randomUUID();
         this.createdAt = new Date();
         this.subscriptionCode = frequency.getValue() + "-" + Long.toHexString(Double.doubleToLongBits(Math.random()));

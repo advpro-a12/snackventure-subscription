@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
+@CrossOrigin
 @EnableAsync
 public class SubscriptionController {
 
@@ -35,6 +36,14 @@ public class SubscriptionController {
     @GetMapping("/subscriptions")
     public CompletableFuture<ResponseEntity<List<Subscription>>> getAllSubscriptions() {
         List<Subscription> subscriptions = subscriptionService.getAllSubscriptions();
+        return CompletableFuture.completedFuture(ResponseEntity.ok(subscriptions));
+    }
+
+    @Async
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @GetMapping("/subscriptions/customer/{id}")
+    public CompletableFuture<ResponseEntity<List<Subscription>>> getSubscriptionsByCustomerId(@PathVariable String id) {
+        List<Subscription> subscriptions = subscriptionService.getSubscriptionsByCustomerId(id);
         return CompletableFuture.completedFuture(ResponseEntity.ok(subscriptions));
     }
 

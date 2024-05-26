@@ -27,6 +27,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
+    public List<Subscription> getSubscriptionsByCustomerId(String id) {
+        return subscriptionRepository.findByCustomerId(id);
+    }
+
+    @Override
     public Subscription findById(String subscriptionId) {
         UUID id = UUID.fromString(subscriptionId);
         return subscriptionRepository.findById(id)

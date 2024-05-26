@@ -15,7 +15,7 @@ public class SubscriptionTest {
 
     @BeforeEach
     public void setUp() {
-        subscription = new Subscription(frequency, customerId, subscriptionBoxId);
+        subscription = new Subscription(frequency, subscriptionBoxId, customerId);
     }
 
     @Test
