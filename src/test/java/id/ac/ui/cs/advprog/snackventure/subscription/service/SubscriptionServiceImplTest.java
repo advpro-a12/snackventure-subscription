@@ -75,6 +75,19 @@ public class SubscriptionServiceImplTest {
     }
 
     @Test
+    public void testGetSubscriptionsByCustomerId() {
+        Subscription subscription1 = new Subscription();
+        Subscription subscription2 = new Subscription();
+        String customerId = "1";
+        when(subscriptionRepository.findByCustomerId(customerId)).thenReturn(Arrays.asList(subscription1, subscription2));
+
+        List<Subscription> subscriptions = subscriptionService.getSubscriptionsByCustomerId(customerId);
+
+        verify(subscriptionRepository, times(1)).findByCustomerId(customerId);
+        assertEquals(2, subscriptions.size());
+    }
+
+    @Test
     public void testUpdateApprovalStatusToApproved() {
         Subscription subscription = new Subscription();
         UUID id = UUID.randomUUID();

@@ -9,4 +9,5 @@ public interface SubscriptionService {
     public Subscription findById(String subscriptionId);
     public Subscription updateApprovalStatus(String subscriptionId, String status);
     public Subscription cancelSubscription(String subscriptionId);
+    public List<Subscription> getSubscriptionsByCustomerId(String id);
 }
