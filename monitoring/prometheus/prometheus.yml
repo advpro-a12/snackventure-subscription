@@ -2,6 +2,6 @@ scrape_configs:
   - job_name: 'MyAppMetrics'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:8080']
+      - targets: ['35.198.232.212']
         labels:
           application: 'subscription'
